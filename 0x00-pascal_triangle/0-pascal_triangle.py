@@ -2,20 +2,24 @@
 
 
 def pascal_triangle(n):
-    """
-    Returns a list of integers
-    representing the Pascal Triangle of n
-    returns empty list if n <= 0
-    """
-    tri_angle = []
+    """Generate Pascal's Triangle up to n rows."""
     if n <= 0:
-        return tri_angle
-    tri_angle = [[1]]
+        return []
+    
+    triangle = [[1]]
     for i in range(1, n):
-        temp = [1]
-        for j in range(len(tri_angle[i - 1]) - 1):
-            curr = tri_angle[i - 1]
-            temp.append(tri_angle[i - 1][j] + tri_angle[i - 1][j + 1])
-        temp.append(1)
-        tri_angle.append(temp)
-    return tri_angle
+        row = [1]
+        for j in range(1, i):
+            row.append(triangle[i-1][j-1] + triangle[i-1][j])
+        row.append(1)
+        triangle.append(row)
+    
+    return triangle
+
+def print_triangle(triangle):
+    """Print the Pascal's Triangle."""
+    for row in triangle:
+        print("[{}]".format(",".join([str(x) for x in row])))
+
+if __name__ == "__main__":
+    print_triangle(pascal_triangle(5))
