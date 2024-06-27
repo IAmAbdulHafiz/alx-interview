@@ -3,22 +3,21 @@
 0-pascal_triangle
 """
 
-
-def pascal_triangle(n):
+def pascal_triangle(rows):
     """
     Returns a list of integers
-    representing the Pascal Triangle of n
-    returns empty list if n <= 0
+    representing the Pascal Triangle of rows
+    returns empty list if rows <= 0
     """
-    matrix = []
-    if n <= 0:
-        return matrix
-    matrix = [[1]]
-    for i in range(1, n):
-        temp = [1]
-        for j in range(len(matrix[i - 1]) - 1):
-            curr = matrix[i - 1]
-            temp.append(matrix[i - 1][j] + matrix[i - 1][j + 1])
-        temp.append(1)
-        matrix.append(temp)
-    return matrix
+    triangle = []
+    if rows <= 0:
+        return triangle
+    triangle = [[1]]
+    for row in range(1, rows):
+        new_row = [1]
+        for col in range(len(triangle[row - 1]) - 1):
+            previous_row = triangle[row - 1]
+            new_row.append(previous_row[col] + previous_row[col + 1])
+        new_row.append(1)
+        triangle.append(new_row)
+    return triangle
