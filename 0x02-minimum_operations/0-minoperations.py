@@ -1,18 +1,21 @@
 #!/usr/bin/python3
-"""
-Module for minimum operations problem.
-"""
+""" Minimum Operations
+    """
 
-def minOperations(n):
-    """
-    Function minOperations
-    Returns an integer
-    """
-    answer = 0
-    neba = 2
-    while n > 1:
-        while n % neba == 0:
-            result += neba
-            n /= neba
-        neba += 1
-    return answer
+
+def minOperations(n: int) -> int:
+    """ Minimum Operations needed to get n H characters """
+    next = 'H'
+    body = 'H'
+    op = 0
+    while (len(body) < n):
+        if n % len(body) == 0:
+            op += 2
+            next = body
+            body += body
+        else:
+            op += 1
+            body += next
+    if len(body) != n:
+        return 0
+    return op
