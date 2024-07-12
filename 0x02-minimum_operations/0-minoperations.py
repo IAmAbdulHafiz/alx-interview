@@ -1,15 +1,11 @@
 #!/usr/bin/python3
-"""Module for task 0
+"""Minimum Operations
 """
 
 
 def minOperations(n):
     """Calculates the fewest number of operations needed to result in
     exactly n H characters in the file.
-
-    In a text file, there is a single character H. Your text editor can
-    execute only two operations in this file: Copy All and Paste characters
-    in the file.
 
     Args:
         n (int): The number of desired H characters.
@@ -20,19 +16,19 @@ def minOperations(n):
     """
     if not isinstance(n, int):
         return 0
-    ops_count = 0
-    clipboard = 0
-    done = 1
-    while done < n:
-        if clipboard == 0:
-            clipboard = done
-            done += clipboard
-            ops_count += 2
-        elif n - done > 0 and (n - done) % done == 0:
-            clipboard = done
-            done += clipboard
-            ops_count += 2
-        elif clipboard > 0:
-            done += clipboard
-            ops_count += 1
-    return ops_count
+    opt = 0
+    buf = 0
+    curent = 1
+    while curent < n:
+        if buf == 0:
+            buf = curent
+            curent += buf
+            opt += 2
+        elif n - curent > 0 and (n - curent) % curent == 0:
+            buf = curent
+            curent += buf
+            opt += 2
+        elif buf > 0:
+            curent += buf
+            opt += 1
+    return opt
