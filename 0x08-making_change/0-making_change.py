@@ -1,20 +1,28 @@
 #!/usr/bin/python3
-"""Change making module.
+"""Determine the fewest number of coins
 """
 
 
 def makeChange(coins, total):
+    """Return fewest number of coins needed to meet total
+    0 if total is 0 or less, -1 if total cannot be met
+    """
     if total <= 0:
         return 0
 
-    # Create an array to store the minimum number of coins required to reach each value
-    min_coins = [float('inf')] * (total + 1)
-    min_coins[0] = 0
+    # Coins validity check
+    if (coins is None or len(coins) == 0):
+        return -1
 
-    for coin in coins:
-        for i in range(coin, total + 1):
-            # Update the minimum number of coins required for each value
-            min_coins[i] = min(min_coins[i], min_coins[i - coin] + 1)
+    change = 0
+    availableCoins = sorted(coins, reverse=True)
+    changeLeft = total
 
-    # Return the minimum number of coins required to reach the total value
-    return min_coins[total] if min_coins[total] != float('inf') else -1
+    for coin in availableCoins:
+        while (changeLeft % coin >= 0 and changeLeft >= coin):
+            change += int(changeLeft / coin)
+            changeLeft = changeLeft % coin
+
+    change = change if changeLeft == 0 else -1
+
+    return change
