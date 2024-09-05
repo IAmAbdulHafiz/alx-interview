@@ -1,69 +1,61 @@
 #!/usr/bin/python3
-"""Module for Prime Game"""
+""" Prime Game """
+
+
+def isprime(n):
+    """ Return prime number """
+    for i in range(2, n):
+        if n % i == 0:
+            return False
+    return True
+
+
+def delete_numbers(n, nums):
+    """ Remove numbers - return zero """
+    for i in range(len(nums)):
+        if nums[i] % n == 0:
+            nums[i] = 0
 
 
 def isWinner(x, nums):
+    """ Return name of player that won
+    most rounds
     """
-    Determines the winner of a set of prime number removal games.
-
-    Args:
-        x (int): The number of rounds.
-        nums (list of int): A list of integers where each integer n denotes
-        a set of consecutive integers starting from 1 up to and including n.
-
-    Returns:
-        str: The name of the player who won the most rounds (either "Ben"
-        or "Maria").
-        None: If the winner cannot be determined.
-
-    Raises:
-        None.
-    """
-    if x <= 0 or nums is None:
-        return None
-    if x != len(nums):
-        return None
-
-    ben = 0
-    maria = 0
-
-    a = [1 for x in range(sorted(nums)[-1] + 1)]
-
-    a[0], a[1] = 0, 0
- 
-    for i in range(2, len(a)):
-        rm_multiples(a, i)
-
-    for i in nums:
-        if sum(a[0:i + 1]) % 2 == 0:
-            ben += 1
+    nums.sort()
+    winner = False
+    Maria = 0
+    Ben = 0
+    for game in range(x):
+        # prints("game# ", game+1)
+        nums2 = list(range(1, nums[game] + 1))
+        # print("nums: ", nums2)
+        turn = 0
+        while True:
+            """
+            # monitor turns, uncomment to watch
+            if turn % 2 != 0:
+                print("Ben turn ")
+            else:
+                print("Maria turn ")
+            """
+            change = False
+            for i, n in enumerate(nums2):
+                # print("n: ", n, "i: ", i)
+                if n > 1 and isprime(n):
+                    delete_numbers(n, nums2)
+                    change = True
+                    turn += 1
+                    break
+            # print("movement: ". nums2)
+            if change is False:
+                break
+        if turn % 2 != 0:
+            Maria += 1
         else:
-            maria += 1
-
-    if ben > maria:
-        return "Ben"
-    if maria > ben:
+            Ben += 1
+        # print("Maria: {}, Ben: {}".format(Maria, Ben))
+    if Maria == Ben:
+        return None
+    if Maria > Ben:
         return "Maria"
-    return None
-
-
-def rm_multiples(ls, x):
-    """
-    Removes multiples of a prime number from an array of possible prime
-    numbers.
-
-    Args:
-        ls (list of int): An array of possible prime numbers.
-        x (int): The prime number to remove multiples of.
-
-    Returns:
-        None.
-
-    Raises:
-        None.
-    """
-    for i in range(2, len(ls)):
-        try:
-            ls[i * x] = 0
-        except (ValueError, IndexError):
-            break
+    return "Ben"
